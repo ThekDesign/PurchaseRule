@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">" PurchaseRule"</string>
+
+    <!--功能方面的文字 -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- 關於Login方面的文字，包含帳密部分-->
+    <string name="action_settings">設定</string>
+    <string name="tv_account">帳號：</string>
+    <string name="ed_account_hint">帳號在這裡輸入</string>
+    <string name="tv_password">密碼：</string>
+    <string name="ed_password_hint">密碼在這裡輸入</string>
+
+    <!-- 關於問答方面的文字，包含題目及選項-->
+    <string name="tv_theme">The theme</string>
+    <string name="tv_questions">The questions</string>
+    <string name="btn_select_1">Selection1</string>
+    <string name="btn_select_2">Selection2</string>
+    <string name="btn_select_3">Selection3</string>
+    <string name="btn_select_4">Selection4</string>
+
+</resources>
