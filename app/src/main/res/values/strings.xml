@@ -20,4 +20,8 @@
     <string name="btn_select_3">Selection3</string>
     <string name="btn_select_4">Selection4</string>
 
+    <!-- 作者資料與聯絡方式-->
+    <string name="info_program_author">ThekStudio</string>
+    <string name="info_connect_email">kevin830802@gmail.com</string>
+
 </resources>

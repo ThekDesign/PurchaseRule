@@ -20,6 +20,8 @@ public class TrueOrFalseActivity extends AppCompatActivity {
     //設定讀取行列
     int whichquestion = 2; // 問題的列
     int question_col = 3; // 問題的欄
+    int number_of_answers = 1;// 已答題數
+    int number_of_questions = 10;// 設定要答題數
 
     // 是非題部分的宣告
     ImageView btn_selection_true, btn_selection_false;
@@ -27,11 +29,13 @@ public class TrueOrFalseActivity extends AppCompatActivity {
     Button btn_summit_TF, btn_next_TF, btn_random_TF;
 
     Button btn_changetoC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.true_false_layout);
         FindViewById();
+
         OnClickForQuestions();
 
         btn_changetoC.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,29 @@ public class TrueOrFalseActivity extends AppCompatActivity {
             final Workbook workbook = Workbook.getWorkbook(inputStream);
             final Sheet sheet_TF_01 = workbook.getSheet(1);
 
+            int row = sheet_TF_01.getRows();
+            final int randomquestion = (int) (Math.random() * row + whichquestion);
+
+            String theme = sheet_TF_01.getName();
+            String question = sheet_TF_01.getCell(question_col, randomquestion).getContents();
+
+            MainDisplay(theme, question);
+
+            btn_selection_true.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChangeRandomQuestion_TF(sheet_TF_01);
+                }
+            });
+
+            btn_selection_false.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChangeRandomQuestion_TF(sheet_TF_01);
+                }
+            });
+
+
             //是非題的Button OnClick事件宣告
             btn_summit_TF.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,7 +96,7 @@ public class TrueOrFalseActivity extends AppCompatActivity {
             btn_random_TF.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ChangeRandomQuestion_TF(sheet_TF_01);
+                    //ChangeRandomQuestion_TF(sheet_TF_01);
                 }
             });
 
@@ -105,14 +132,22 @@ public class TrueOrFalseActivity extends AppCompatActivity {
 
     private void ChangeRandomQuestion_TF(Sheet sheet) {
         try {
-
             int row = sheet.getRows();
+
             int randomquestion = (int) (Math.random() * row + whichquestion);
 
             String theme = sheet.getName();
             String question = sheet.getCell(question_col, randomquestion).getContents();
 
             MainDisplay(theme, question);
+
+            if (number_of_answers >= number_of_questions) {
+                Intent i = new Intent(TrueOrFalseActivity.this, CompleteActivity.class);
+                startActivity(i);
+            } else {
+                number_of_answers++;
+            }
+
 
         } catch (Exception e) {
 

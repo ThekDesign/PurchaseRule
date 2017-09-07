@@ -44,6 +44,14 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
+    public class OnClickForSelection implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+        }
+    }
+
     private void OnClickForQuestions() {
 
         try {
@@ -171,7 +179,6 @@ public class QuestionsActivity extends AppCompatActivity {
         btn_selection_3.setText(selection_3);
         btn_selection_4.setText(selection_4);
     }
-
 
     private void FindViewById() {
         tv_theme = (TextView) findViewById(R.id.tv_theme);
