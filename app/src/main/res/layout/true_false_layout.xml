@@ -20,20 +20,15 @@
         android:textSize="20sp"
         android:textStyle="normal|bold" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="300" />
-
     <TextView
         android:id="@+id/tv_questions_TF"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:layout_weight="50"
+        android:layout_weight="1500"
         android:gravity="center"
         android:text="@string/tv_questions"
         android:textSize="20sp"
@@ -42,7 +37,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="300" />
+        android:layout_weight="100" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,56 +59,5 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/cross" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="100"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_random_TF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="RANDOM" />
-
-        <Button
-            android:id="@+id/btn_next_TF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="NEXT" />
-
-        <Button
-            android:id="@+id/btn_summit_TF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="summit" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_changetoC"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="30"
-        android:text="Change to C" />
 
 </LinearLayout>

@@ -16,20 +16,31 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/btn_read"
+        android:id="@+id/btn_choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="151dp"
-        android:text="Button"
-        android:onClick="jumpother"
+        android:layout_marginTop="116dp"
+        android:text="選擇題"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_excel" />
+
+    <Button
+        android:id="@+id/btn_TF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="48dp"
+        android:text="是非題"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_choice" />
 </android.support.constraint.ConstraintLayout>

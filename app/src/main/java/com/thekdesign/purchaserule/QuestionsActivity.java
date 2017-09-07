@@ -19,37 +19,22 @@ public class QuestionsActivity extends AppCompatActivity {
     // 選擇題部分的宣告
     Button btn_selection_1, btn_selection_2, btn_selection_3, btn_selection_4;
     TextView tv_theme, tv_questions;
-    Button btn_summit, btn_next, btn_random;
     //設定讀取行列
     int whichquestion = 2; // 問題的列
     int question_col = 3; // 問題的欄
     int selection_col = 4; // 選項的欄
-
-    //暫時轉換是非題及選擇題的宣告
-    Button btn_changetoTF;
+    int answer_col = 2; // 答案的欄
+    int number_of_answers = 1;// 已答題數
+    int number_of_questions = 10;// 設定要答題數
+    String answer_user_select = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions_layout);
         FindViewById();
-        OnClickForQuestions();
-
-        btn_changetoTF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(QuestionsActivity.this, TrueOrFalseActivity.class);
-                startActivity(i);
-            }
-        });
-    }
-
-    public class OnClickForSelection implements View.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
-
-        }
+        FirstView();
+        SelectionOnClickListners();
     }
 
     private void OnClickForQuestions() {
@@ -57,35 +42,64 @@ public class QuestionsActivity extends AppCompatActivity {
         try {
             AssetManager assetManager = getAssets();
             InputStream inputStream = assetManager.open("purchaserule.xls");
-            final Workbook workbook = Workbook.getWorkbook(inputStream);
+            Workbook workbook = Workbook.getWorkbook(inputStream);
             final Sheet sheet_Choice_01 = workbook.getSheet(0);
 
-            //選擇題的Button OnClick事件宣告
-            btn_summit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    GetQuestionsFormExcel(workbook, sheet_Choice_01);
-                }
-            });
+            int row = sheet_Choice_01.getRows();
+            int randomquestion = (int) (Math.random() * row + whichquestion);
+            String answer = sheet_Choice_01.getCell(answer_col, randomquestion).getContents();
 
-            btn_next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChangeAnotherQuestion(sheet_Choice_01);
-                }
-            });
+            String theme = sheet_Choice_01.getName();
+            String question = sheet_Choice_01.getCell(question_col, randomquestion).getContents();
 
-            btn_random.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChangeRandomQuestion(sheet_Choice_01);
-                }
-            });
+            String selection_1 = sheet_Choice_01.getCell(selection_col, randomquestion).getContents();
+            String selection_2 = sheet_Choice_01.getCell(selection_col + 1, randomquestion).getContents();
+            String selection_3 = sheet_Choice_01.getCell(selection_col + 2, randomquestion).getContents();
+            String selection_4 = sheet_Choice_01.getCell(selection_col + 3, randomquestion).getContents();
+
+            if (number_of_answers >= number_of_questions) {
+                Intent i = new Intent(this, CompleteActivity.class);
+                startActivity(i);
+            } else {
+                MainDisplay(theme, question);
+                SelectionsDisplay(selection_1, selection_2, selection_3, selection_4);
+            }
+            if (answer_user_select.equals(answer) && !answer_user_select.equals("")) {
+                Toast.makeText(this, "正解！", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "答錯囉！", Toast.LENGTH_SHORT).show();
+            }
 
         } catch (Exception e) {
 
         }
 
+    }
+
+    private void FirstView() {
+        try {
+            AssetManager assetManager = getAssets();
+            InputStream inputStream = assetManager.open("purchaserule.xls");
+            Workbook workbook = Workbook.getWorkbook(inputStream);
+            final Sheet sheet_Choice_01 = workbook.getSheet(0);
+
+            int row = sheet_Choice_01.getRows();
+            int randomquestion = (int) (Math.random() * row + whichquestion);
+
+            String theme = sheet_Choice_01.getName();
+            String question = sheet_Choice_01.getCell(question_col, randomquestion).getContents();
+
+            String selection_1 = sheet_Choice_01.getCell(selection_col, randomquestion).getContents();
+            String selection_2 = sheet_Choice_01.getCell(selection_col + 1, randomquestion).getContents();
+            String selection_3 = sheet_Choice_01.getCell(selection_col + 2, randomquestion).getContents();
+            String selection_4 = sheet_Choice_01.getCell(selection_col + 3, randomquestion).getContents();
+
+            MainDisplay(theme, question);
+            SelectionsDisplay(selection_1, selection_2, selection_3, selection_4);
+
+        } catch (Exception e) {
+
+        }
     }
 
     private void ChangeAnotherQuestion(Sheet sheet) {
@@ -123,9 +137,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
             int row = sheet.getRows();
             int randomquestion = (int) (Math.random() * row + whichquestion);
+            String answer = sheet.getCell(answer_col, randomquestion).getContents();
 
             String theme = sheet.getName();
             String question = sheet.getCell(question_col, randomquestion).getContents();
+
             String selection_1 = sheet.getCell(selection_col, randomquestion).getContents();
             String selection_2 = sheet.getCell(selection_col + 1, randomquestion).getContents();
             String selection_3 = sheet.getCell(selection_col + 2, randomquestion).getContents();
@@ -134,6 +150,7 @@ public class QuestionsActivity extends AppCompatActivity {
             MainDisplay(theme, question);
             SelectionsDisplay(selection_1, selection_2, selection_3, selection_4);
 
+            SelectionOnClickListners();
         } catch (Exception e) {
 
         }
@@ -180,6 +197,43 @@ public class QuestionsActivity extends AppCompatActivity {
         btn_selection_4.setText(selection_4);
     }
 
+    private void SelectionOnClickListners() {
+
+        btn_selection_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answer_user_select = "1";
+                OnClickForQuestions();
+                number_of_answers++;
+            }
+        });
+        btn_selection_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answer_user_select = "2";
+                OnClickForQuestions();
+                number_of_answers++;
+            }
+        });
+        btn_selection_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answer_user_select = "3";
+                OnClickForQuestions();
+                number_of_answers++;
+            }
+        });
+        btn_selection_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answer_user_select = "4";
+                OnClickForQuestions();
+                number_of_answers++;
+            }
+        });
+
+    }
+
     private void FindViewById() {
         tv_theme = (TextView) findViewById(R.id.tv_theme);
         tv_questions = (TextView) findViewById(R.id.tv_questions);
@@ -187,11 +241,5 @@ public class QuestionsActivity extends AppCompatActivity {
         btn_selection_2 = (Button) findViewById(R.id.btn_selection_2);
         btn_selection_3 = (Button) findViewById(R.id.btn_selection_3);
         btn_selection_4 = (Button) findViewById(R.id.btn_selection_4);
-
-        btn_summit = (Button) findViewById(R.id.btn_summit);
-        btn_next = (Button) findViewById(R.id.btn_next);
-        btn_random = (Button) findViewById(R.id.btn_random);
-
-        btn_changetoTF = (Button) findViewById(R.id.btn_changetoTF);
     }
 }

@@ -1,7 +1,6 @@
 package com.thekdesign.purchaserule;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,17 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.InputStream;
-
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView tv_excel;
-    Button btn_read;
+    Button btn_choice, btn_TF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,38 +29,30 @@ public class MainActivity extends AppCompatActivity
         FindViewByIds();
         NavigationControll();
 
+        btn_choice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jump_to_choice();
+            }
+        });
+
+        btn_TF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jump_to_TF();
+            }
+        });
+
     }
 
-    public void jumpother(View v) {
+    public void jump_to_choice() {
         Intent intent = new Intent(this , QuestionsActivity.class);
         startActivity(intent);
     }
 
-    public void order(View v) {
-        try {
-            AssetManager assetManager = getAssets();
-            InputStream inputStream = assetManager.open("testexcel.xls");
-            Workbook workbook = Workbook.getWorkbook(inputStream);
-            Sheet sheet = workbook.getSheet(0);
-            int row = sheet.getRows();
-            int col = sheet.getColumns();
-            String text_form_excel="";
-            for (int r = 0; r < row; r++) {
-                for (int c = 0; c < col; c++) {
-                    Cell cell = sheet.getCell(c, r);
-                    text_form_excel =text_form_excel + " " + cell.getContents();
-                }
-                text_form_excel = text_form_excel + "\n" + sheet.getName();
-            }
-            display(text_form_excel);
-        } catch (Exception e) {
-
-        }
-
-    }
-
-    public void display(String value) {
-        tv_excel.setText(value);
+    public void jump_to_TF() {
+        Intent intent = new Intent(this , TrueOrFalseActivity.class);
+        startActivity(intent);
     }
 
     public void NavigationControll() {
@@ -95,7 +80,9 @@ public class MainActivity extends AppCompatActivity
 
     private void FindViewByIds() {
         tv_excel = (TextView) findViewById(R.id.tv_excel);
-        btn_read = (Button) findViewById(R.id.btn_read);
+
+        btn_choice = (Button) findViewById(R.id.btn_choice);
+        btn_TF = (Button) findViewById(R.id.btn_TF);
     }
 
     @Override
